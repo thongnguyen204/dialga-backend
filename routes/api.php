@@ -21,8 +21,11 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])
 ->middleware('auth:sanctum')
 ->name('logout');
-Route::post('/test', function () {
-    return 'test';
+Route::post('/test-post-api', function () {
+    return 'post';
+});
+Route::get('/test-get-api', function () {
+    return 'get';
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

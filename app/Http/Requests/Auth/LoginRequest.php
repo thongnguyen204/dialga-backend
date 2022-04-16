@@ -15,6 +15,12 @@ class LoginRequest extends FormRequest
     {
         return true;
     }
+    /**
+     * Indicates if the validator should stop on the first rule failure.
+     *
+     * @var bool
+     */
+    protected $stopOnFirstFailure = true;
 
     /**
      * Get the validation rules that apply to the request.
