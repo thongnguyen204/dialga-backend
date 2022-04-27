@@ -20,6 +20,7 @@ class RegisterController extends Controller
         ]);
 
         return response()->json([
+            'name'  => $request->name,
             'access_token' => $user->createToken('authToken')
                 ->plainTextToken,
         ], 200);
