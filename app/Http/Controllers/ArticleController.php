@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
+use Illuminate\Http\Request;
 use App\Repositories\ArticleRepository;
 
 class ArticleController extends Controller
@@ -57,7 +58,12 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        if ($request->user()->cannot('update', $article)) {
+            return response()->json([
+                'message' => 'Unauthorize'
+            ], 403);
+        }
+        return $this->articleRepository->update($request, $article);
     }
 
     /**
@@ -66,8 +72,13 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy(Request $request ,Article $article)
     {
-        //
+        if ($request->user()->cannot('delete', $article)) {
+            return response()->json([
+                'message' => 'Unauthorize'
+            ], 403);
+        }
+        return $this->articleRepository->delete($article); 
     }
 }
