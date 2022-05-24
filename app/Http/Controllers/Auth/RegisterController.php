@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Mail\Welcome;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -18,6 +19,9 @@ class RegisterController extends Controller
             'name'  => $request->name,
             'password'  => Hash::make($request->password)
         ]);
+
+        if($user)
+            Mail::to($request->email)->send(new Welcome());
 
         return response()->json([
             'name'  => $request->name,
